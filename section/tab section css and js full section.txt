@@ -1,0 +1,216 @@
+<div class="tab-section module-inner">
+
+    <div class="tab-header">
+    {% for block in section.blocks %}
+    {% if block.settings.inner_heading_section !=blank %}   
+        <ul class="tabs {% if forloop.first %} current {% endif %} tabloop-{{ forloop.index }}" data-tab="tab-{{ forloop.index }}">
+            <li class="tab-link">{{ block.settings.inner_heading_section }}</li>
+        </ul>
+    {% endif %}
+    {% endfor %}
+    </div>
+    <div class="tab-footer">
+        {% for block in section.blocks %}
+            <div id="tab-{{ forloop.index }}" class="tab-content {% if forloop.first %} current {% endif %}">   
+            {% for product in block.settings.collection.products %}
+                <div class="tab-products">
+                    {%
+                    render 'product-list-item',
+                    product: product
+                    %}
+                </div>
+            {% endfor %}
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+    
+    </div>
+
+
+    <script>
+$(document).ready(function(){
+	
+	$('.tab-header .tabs').click(function(){
+		var tab_id = $(this).attr('data-tab');
+
+		$('.tab-header .tabs').removeClass('current');
+		$('.tab-content').removeClass('current');
+
+		$(this).addClass('current');
+		$("#"+tab_id).addClass('current');
+	})
+
+})
+
+</script>
+
+<style>
+
+
+.tab-section{
+	width:100%;  
+    max-width: 1400px;
+	margin: 40px auto;
+    background: #EBE8E3;
+    display: flex;
+    flex-direction: column;
+}
+
+ul.tabs{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+ul.tabs li{
+	background: none;
+	color: #222;
+	cursor: pointer;
+}
+
+ul.tabs li.current{
+	background: #ededed;
+	color: #222;
+}
+
+.tab-content{
+	display: none;
+	/* background: #ededed; */
+	/* padding: 15px; */
+    /* opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    height: 0; */
+    transition: all 0.3s ease-in-out;
+}
+
+.tab-content.current{
+	display: inherit;
+    visibility: visible;
+    /* opacity: 1;
+    pointer-events:auto;
+    height: 100%; */
+    transition: all 0.3s ease-in-out;
+}
+
+.tab-header {
+    padding: 8px;
+    background: white;
+    border-radius: 50px;
+    justify-content: space-around;
+    position: relative;
+    z-index: 1;
+    margin:20px auto;
+}
+
+.tab-header>* {
+    flex: 0 0 25%;
+}
+
+.tab-header .tabs {
+    text-align: center;
+    padding: 5px 20px;
+}
+
+.tab-header .tabs.current {
+    background: black;
+    border-radius: 100px;
+}
+
+.tabs.current .tab-link {
+    color: white;
+}
+
+.tab-content.current {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    transition: all 0.5s ease-in-out;
+}
+
+
+
+.tab-products .product-list-item{
+    width: 100%;
+}
+
+@media only screen and (min-width:1400px) {
+
+.tab-header {
+    display: flex;
+    width:100%;
+    max-width: 72%;
+}
+
+.tab-content.current>* {
+    flex: 0 0 50%;
+}
+
+}
+
+@media only screen and (max-width:1400px) {
+
+.tab-header {
+    width:100%;
+}
+
+}
+
+@media only screen and (max-width:767px) {
+
+.module-inner{
+    margin: auto !important;
+}
+
+.tab-section.module-inner {
+    margin: 40px 0 !IMPORTANT;
+}
+
+
+}
+
+
+
+
+
+</style>
+
+
+
+{%- schema -%}
+    {
+        "name": "Tab Section",
+         "settings": [
+          {
+          "type": "text",
+          "id": "heading_section",
+          "label": "Heading"
+        }
+    ],
+    "blocks": [
+     {
+       "name": "Slide",
+       "type": "slide",
+       "settings": [
+        {
+          "type": "text",
+          "id": "inner_heading_section",
+          "label": "Heading"
+        },
+        {
+        "type": "collection",
+        "id": "collection",
+        "label": "Collection"
+        }
+
+       ]
+     }
+  ],
+    "presets": [
+      {
+        "name": "Tab Section"
+      } 
+    ]
+    }
+    {%- endschema -%}
+

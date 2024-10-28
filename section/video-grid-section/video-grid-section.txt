@@ -1,0 +1,269 @@
+<div class="gird_section">
+  <div class="gird_section_row container">
+    {% if section.settings.heading_section !=blank %}
+    <div class="grid-row-header">
+        <h2 class="section__title heading h3" >{{ section.settings.heading_section  }}</h2>
+    </div>      
+    {% endif %}
+    <div class="gird_left_section">
+    {% for block in section.blocks %}
+
+        {% if forloop.first %}
+            <div class="grid_section_video-1">
+                <style>
+                    .gird_left_section .grid_section_video-1 {
+                     grid-row-start: 1;
+                     grid-row-end: 3;
+                     grid-column-start: 1;
+                     grid-column-end: 5;
+                 }
+                 </style>
+        {% elsif forloop.index == 2 %}
+            <div class="grid_section_video-2">
+                <style>
+                    .gird_left_section .grid_section_video-1{
+                      grid-column-end: 3;
+                    } 
+                    
+                    .gird_left_section .grid_section_video-2 {
+                          grid-column-start: 3;
+                          grid-column-end: 5;
+                          grid-row-start: 1;
+                           grid-row-end: 3;
+                      }
+                  </style>
+        {% elsif forloop.index == 3 %}
+            <div class="grid_section_video-3">
+                <style>
+                    .gird_section_row.container .gird_left_section .grid_section_video-1 {
+                        grid-row-start: 1;
+                        grid-row-end: 3;
+                        grid-column-start: 1;
+                        grid-column-end:3;
+                    }
+
+                    .gird_section_row.container .grid_section_video-3 {
+                        grid-column-start: 3;
+                        grid-column-end: 5;
+                        grid-row-start:2;
+                    }
+
+                    .gird_section_row.container .gird_left_section .grid_section_video-2 {
+                        grid-row-end: 2;
+                    }
+                </style>
+        {% elsif forloop.index == 4 %}
+            <div class="grid_section_video-4">
+                <style>
+                    .gird_section_row.container .gird_left_section .grid_section_video-1 {
+                    grid-row-end: 2;
+                }
+
+                .gird_section_row.container .gird_left_section .grid_section_video-4 {
+                    grid-column-start: 1;
+                }
+
+                </style>
+        {% else %}
+            <div class="grid_section_video-5">
+                <style>
+                    .gird_section_row.container .gird_left_section .grid_section_video-1 {
+                        grid-row-end: 3;
+                        grid-column-end:2;
+                    }
+
+                    .gird_left_section .grid_section_video-2 {
+                    grid-column-start: 2;
+                    grid-column-end: 4;
+                }
+                .gird_section_row.container .grid_section_video-3 {
+                    grid-column-start: 4;
+                    grid-column-end: 5;
+                    grid-row-start: 1;
+                }
+
+                .gird_section_row.container .gird_left_section .grid_section_video-4 {
+                    grid-column-start: 2;
+                }
+
+                </style>
+        {% endif %}
+            {% if block.settings.video !=blank %} 
+                <div class="gird_video">
+                <video controls poster="" >
+                    <source src="{{ block.settings.video.sources[1].url }}" type="video/mp4">
+                    <source src="{{ block.settings.video.sources[1].url }}" type="video/ogg">
+                </video>
+                </div>
+                {% else %}
+                    <div class="placeholder_img">
+                        {{ 'image' | placeholder_svg_tag }}
+                    </div>  
+            {% endif %}
+        </div>  
+
+    {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+<style>
+    .gird_video video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    .gird_section_row {
+        padding: 20px;
+    }
+
+    .grid-row-header {
+    text-align: center;
+    padding: 1rem;
+    }
+
+    .gird_video {
+    height: 100%;
+    width: 100%;
+    }
+
+    .placeholder_img {
+    border: 1px solid #bdb0b0;
+    height: 100%;
+    width: 100%;
+    }  
+    
+    .placeholder_img svg {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    aspect-ratio: 3/2;
+    }
+
+@media screen and  (min-width: 1024px) {
+    .gird_left_section {
+        display: grid;
+        gap: 20px;
+        width: 100%;
+        max-width: 100%;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows:auto auto;
+    }
+    .grid_section_video-1 {
+        grid-row-start: 1;
+        grid-row-end: 3;
+        grid-column-start: 1;
+        grid-column-end: 2;
+        }
+    .grid_section_video-2 {
+        grid-column-start: 2;
+        grid-column-end: 4;
+        }
+    .grid_section_video-3 {
+        grid-column-start: 4;
+        grid-column-end: 5;
+        }
+    .grid_section_video-4 {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        }
+    .grid_section_video-5 {
+        grid-column-start: 3;
+        grid-column-end: 5;
+        }
+}
+
+@media only screen and (min-width:768px) and (max-width:1023px){
+
+.gird_left_section {
+    display:grid;
+    gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows:auto auto;
+}
+
+.grid_section_video-5 {
+    grid-column-start: 3;
+    grid-column-end: 5;
+}
+
+}
+
+@media screen and  (min-width:1366px) {
+
+.gird_left_section {
+    grid-template-rows: 350px 350px;
+}
+
+}
+
+@media screen and  (max-width:767px) {
+
+.gird_left_section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+}
+
+
+</style>
+
+
+
+
+{%- schema -%}
+    {
+        "name": "Multi Video",
+         "settings": [
+          {
+          "type": "text",
+          "id": "heading_section",
+          "label": "Heading",
+          "default":"Heading"
+        }
+
+ 
+    ],
+    "blocks": [
+     {
+       "name": "Slide",
+       "type": "slide",
+       "limit":5,
+       "settings": [
+        {
+        "type": "video",
+        "id": "video",
+        "label": "video"
+        }
+
+       ]
+     }
+  ],
+    "presets": [
+      {
+        "name": "Multi-Video-Grid",
+        "blocks": [
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        },
+        {
+          "type": "slide"
+        }
+      ]
+      } 
+    ]
+    }
+    {%- endschema -%}
+
